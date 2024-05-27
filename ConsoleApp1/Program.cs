@@ -14,6 +14,7 @@ namespace ConsoleApp1
             Console.WriteLine(Personne2.Prenom);
             Console.WriteLine(Personne2.Age);
 
+
         }
     }
     namespace Niveau2
