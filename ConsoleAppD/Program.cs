@@ -18,6 +18,6 @@ liste.Add(c1.Compter);
 liste.Add(c2.Compter);
 foreach(var d in liste)
 {
-    d();
+    d.Invoke();
 }
 
