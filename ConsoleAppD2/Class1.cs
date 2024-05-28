@@ -1,4 +1,7 @@
-﻿namespace ConsoleAppD
+﻿using System.Threading;
+using System;
+
+namespace ConsoleAppD2
 {
     internal class Compteur
     {

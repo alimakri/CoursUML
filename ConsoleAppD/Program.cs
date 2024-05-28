@@ -1,5 +1,7 @@
 ﻿// Thread.Sleep(3000);
 
+using ConsoleAppD;
+
 Compteur c1 = new Compteur 
 {
     Min = 1,
@@ -7,6 +9,7 @@ Compteur c1 = new Compteur
     Couleur = ConsoleColor.Cyan,
     Pause = 500
 };
+
 Compteur c2 = new Compteur
 {
     Min = 1,
@@ -15,11 +18,10 @@ Compteur c2 = new Compteur
     Pause = 300
 };
 
-List<CompteurDelegue> liste = new List<CompteurDelegue>();
-liste.Add(c1.Compter);
-liste.Add(c2.Compter);
-foreach(var d in liste)
-{
-    d.Invoke();
-}
+var d1 = new CompteurDelegue(c1.Compter);
+var d2 = new CompteurDelegue(c2.Compter);
+
+d1.BeginInvoke(null, null);
+d2.Invoke();
+
 
