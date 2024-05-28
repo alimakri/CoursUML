@@ -1,4 +1,6 @@
-﻿Compteur c1 = new Compteur 
+﻿// Thread.Sleep(3000);
+
+Compteur c1 = new Compteur 
 {
     Min = 1,
     Max = 10,
