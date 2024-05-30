@@ -9,5 +9,6 @@ namespace FilRouge
     public static class Commun
     {
         public static List<Etablissement> Etablissements = new List<Etablissement>();
+        public static List<Utilisateur> Utilisateurs=new List<Utilisateur>();
     }
 }
