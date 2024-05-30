@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FilRouge
 {
-    public class Eleve
-    {
-        public string Libelle;
-        public List<Session> LesSessions;
-    }
+    #region Autres
     public class Cours
     {
         public string Libelle;
@@ -20,10 +15,11 @@ namespace FilRouge
     }
     public class Session
     {
-        public string Libelle; 
+        public string Libelle;
         public List<Module> LesModules;
         public List<Eleve> LesEleves;
-
+        public DateTime DateDebut;
+        public DateTime DateFin;
     }
     public class Note
     {
@@ -50,8 +46,5 @@ namespace FilRouge
         // ....
         public List<Session> LesSessions;
     }
-    public class Formateur
-    {
-        public string Libelle;
-    }
+    #endregion
 }
