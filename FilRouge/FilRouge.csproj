@@ -11,4 +11,9 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FilRouge.Commun\FilRouge.Commun.csproj" />
+    <ProjectReference Include="..\FilRouge.Metier\FilRouge.Metier.csproj" />
+  </ItemGroup>
+
 </Project>

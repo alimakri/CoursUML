@@ -8,40 +8,40 @@ namespace FilRouge
 {
     internal static class Scenari
     {
-        /// <summary>
-        /// Cas d'utilisation création et affichage des établissements
-        /// </summary>
-        public static void Scenario1()
+        public static void Scenario0()
         {
             Console.Write("Nom: ");
             var nom = Console.ReadLine();
             Console.Write("Mot de passe: ");
             var password = Console.ReadLine();
-            var superAdmin = new SuperAdmin(nom, password, RoleEnum.SuperAdmin);
-            if (!superAdmin.Autorise)
-            {
-                Console.WriteLine("Erreur d'identification");
-            }
-            else
-            {
-                Console.Write("Nom établissement: ");
-                var nomE = Console.ReadLine();
-                var etablissement = new Etablissement
-                {
-                    Id = Commun.Etablissements.Count + 1,
-                    Libelle = nomE
-                };
-                Commun.Etablissements.Add(etablissement);
-                Data.AddEtablissement(etablissement);
-            }
+            Commun.SuperAdmin = new SuperAdmin(nom, password, RoleEnum.SuperAdmin);
         }
 
-        // Liste d'etab
+        #region Etablissement
+        /// <summary>
+        /// Cas d'utilisation création d'un établissement
+        /// </summary>
+        public static void Scenario1()
+        {
+            Console.Write("Nom établissement: ");
+            var nomE = Console.ReadLine();
+            var etablissement = new Etablissement
+            {
+                Id = Data.GetEtablissements().Count + 1,
+                Libelle = nomE
+            };
+            Data.AddEtablissement(etablissement);
+        }
+
+        /// <summary>
+        /// Cas d'utilisation Liste des établissements
+        /// </summary>
         internal static void Scenario2()
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Green;
-            foreach (var etab in Commun.Etablissements)
+
+            foreach (var etab in Commun.GetEtablissements())
             {
                 Console.WriteLine("{0}. {1}", etab.Id, etab.Libelle);
             }
@@ -49,18 +49,21 @@ namespace FilRouge
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
+        /// <summary>
+        /// Cas d'utilisation Suppression d'un établissement
+        /// </summary>
         internal static void Scenario3()
         {
             Console.WriteLine("Quel etablissement ?");
             var saisie = Console.ReadLine() ?? "0";
-            var etabSup = Commun.Etablissements.FirstOrDefault(x => x.Id == int.Parse(saisie));
-            if (etabSup != null)
-            {
-                Commun.Etablissements.Remove(etabSup);
-            }
+            Commun.DeleteEtablissement(int.Parse(saisie));
         }
+        #endregion
 
-
+        #region Admin
+        /// <summary>
+        /// Cas d'utilisation création d'un admin
+        /// </summary>
         public static void Scenario4()
         {
             Console.Write("Nom admin: ");
@@ -69,24 +72,25 @@ namespace FilRouge
             var role = Console.ReadLine();
             var admin = new Admin
             {
-                Id = Commun.Utilisateurs.Count + 1,
+                Id = Data.GetUtilisateurs(RoleEnum.None).Count + 1,
                 Nom = nomAdmin,
                 Role = role == "1" ? RoleEnum.SuperAdmin : RoleEnum.Admin
             };
-            Commun.Utilisateurs.Add(admin);
             Data.AddUtilisateur(admin);
         }
 
-        // Liste d'admin
+        /// <summary>
+        /// Cas d'utilisation Liste des admins
+        /// </summary>
         internal static void Scenario5()
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Green;
-            var admins = Commun.GetAdmins();  
+            var admins = Commun.GetAdmins();
             foreach (var admin in admins)
             {
                 Console.WriteLine("{0}. {1}", admin.Id, admin.Nom);
-                foreach(var etab in admin.LesEtablissements)
+                foreach (var etab in admin.LesEtablissements)
                 {
                     Console.WriteLine("\t{0}. {1}", etab.Id, etab.Libelle);
                 }
@@ -95,45 +99,53 @@ namespace FilRouge
             Console.ForegroundColor = ConsoleColor.Gray;
         }
 
+        /// <summary>
+        /// Cas d'utilisation Suppression d'un admin
+        /// </summary>
         internal static void Scenario6()
         {
             Console.WriteLine("Quel admin ?");
             var saisie = Console.ReadLine() ?? "0";
-            var adminSup = Commun.Utilisateurs
-                .FirstOrDefault(x => x.Role == RoleEnum.Admin && x.Id == int.Parse(saisie));
-            if (adminSup != null)
-            {
-                Commun.Utilisateurs.Remove(adminSup);
-            }
+            Commun.DeleteAdmin(int.Parse(saisie));
+            
         }
+
+        /// <summary>
+        /// Cas d'utilisation Associer un établissement avec un admin
+        /// </summary>
         internal static void Scenario7()
         {
             Console.WriteLine("Quel etablissement ?");
             var etabId = Console.ReadLine() ?? "0";
             Console.WriteLine("Quel admin ?");
             var adminId = Console.ReadLine() ?? "0";
-            var etab = Commun.Etablissements.FirstOrDefault(x => x.Id == int.Parse(etabId));
-            var admin = Commun.GetAdmin(adminId);
+            var etab = Commun.GetEtablissement(int.Parse(etabId));
+            var admin = Commun.GetAdmin(int.Parse(adminId));
             if (etab != null && admin != null)
             {
                 admin.LesEtablissements.Add(etab);
-                Data.AssocierEtabAdmin(etab, admin);
+                Commun.AssocierEtabAdmin(etab, admin);
             }
         }
+        /// <summary>
+        /// Cas d'utilisation Dissocier un établissement avec un admin
+        /// </summary>
         internal static void Scenario8()
         {
             Console.WriteLine("Quel etablissement ?");
             var etabId = Console.ReadLine() ?? "0";
             Console.WriteLine("Quel admin ?");
             var adminId = Console.ReadLine() ?? "0";
-            var etab = Commun.Etablissements.FirstOrDefault(x => x.Id == int.Parse(etabId));
-            var admin = Commun.Utilisateurs.FirstOrDefault(x => x.Role == RoleEnum.Admin && x.Id == int.Parse(adminId));
+            var etab = Commun.GetEtablissement(int.Parse(etabId));
+            var admin = Commun.GetAdmin(int.Parse(adminId));
             if (etab != null && admin != null)
             {
                 ((Admin)admin).LesEtablissements.Remove(etab);
                 Data.DissocierEtabAdmin(etab, admin);
             }
         }
+        #endregion
+
     }
 
 }

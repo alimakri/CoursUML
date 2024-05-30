@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilRouge.Metier", "FilRouge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilRouge.Donnees", "FilRouge.Donnees\FilRouge.Donnees.csproj", "{B6298E5F-A0AE-4D77-B581-FCF97DED07C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FilRouge.Commun", "FilRouge.Commun\FilRouge.Commun.csproj", "{6995DF9A-A243-4030-B477-05A7283BF737}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +141,10 @@ Global
 		{B6298E5F-A0AE-4D77-B581-FCF97DED07C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6298E5F-A0AE-4D77-B581-FCF97DED07C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6298E5F-A0AE-4D77-B581-FCF97DED07C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6995DF9A-A243-4030-B477-05A7283BF737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6995DF9A-A243-4030-B477-05A7283BF737}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6995DF9A-A243-4030-B477-05A7283BF737}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6995DF9A-A243-4030-B477-05A7283BF737}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +171,7 @@ Global
 		{28137D4A-1FE0-4C47-80E0-F750597E17DC} = {9074F13E-2577-472D-9311-F44FCCF4035C}
 		{4E39C888-2826-4440-A2C8-5A5DC71AA9D5} = {9074F13E-2577-472D-9311-F44FCCF4035C}
 		{B6298E5F-A0AE-4D77-B581-FCF97DED07C5} = {9074F13E-2577-472D-9311-F44FCCF4035C}
+		{6995DF9A-A243-4030-B477-05A7283BF737} = {9074F13E-2577-472D-9311-F44FCCF4035C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FB07361B-FBD4-4FAB-9896-9C70034C7C82}

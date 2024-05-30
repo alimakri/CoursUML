@@ -6,9 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\FilRouge.Commun\FilRouge.Commun.csproj" />
-    <ProjectReference Include="..\FilRouge.Donnees\FilRouge.Donnees.csproj" />
-  </ItemGroup>
-
 </Project>

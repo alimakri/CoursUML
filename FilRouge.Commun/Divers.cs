@@ -36,7 +36,7 @@ namespace FilRouge
     }
     public class Etablissement
     {
-        internal long Id;
+        public long Id;
         public string Libelle;
         // ....
         public List<Session> LesSessions;

@@ -1,10 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FilRouge
 {
@@ -21,33 +17,33 @@ namespace FilRouge
             Cmd.Connection = cnx;
             Cmd.CommandType = CommandType.Text;
         }
-        internal static void AddEtablissement(Etablissement etablissement)
+        public static void AddEtablissement(Etablissement etablissement)
         {
             Cmd.CommandText = $"insert Etablissement (Libelle) values('{etablissement.Libelle}')";
             Cmd.ExecuteNonQuery();
         }
 
-        internal static void AddUtilisateur(Admin admin)
+        public static void AddUtilisateur(Admin admin)
         {
             Cmd.CommandText = $"insert Utilisateur (Nom, Password, Role) values('{admin.Nom}', '{admin.Password}', {(int)admin.Role})";
             Cmd.ExecuteNonQuery();
         }
 
-        internal static void AssocierEtabAdmin(Etablissement etab, Utilisateur admin)
+        public static void AssocierEtabAdmin(Etablissement etab, Utilisateur admin)
         {
             Cmd.CommandText = $"update Etablissement set Admin={admin.Id} where Id={etab.Id}";
             Cmd.ExecuteNonQuery();
         }
-        internal static void DissocierEtabAdmin(Etablissement etab, Utilisateur admin)
+        public static void DissocierEtabAdmin(Etablissement etab, Utilisateur admin)
         {
             Cmd.CommandText = $"update Etablissement set Admin=NULL where Id={etab.Id}";
             Cmd.ExecuteNonQuery();
         }
 
-        internal static List<Etablissement> GetEtablissements(long adminId = 0)
+        public static List<Etablissement> GetEtablissements(long id = 0)
         {
             Cmd.CommandText = "select * from Etablissement";
-            if (adminId != 0) Cmd.CommandText += $" where Id={adminId}";
+            if (id != 0) Cmd.CommandText += $" where Id={id}";
             SqlDataReader rd = Cmd.ExecuteReader();
 
             var liste = new List<Etablissement>();
@@ -58,9 +54,49 @@ namespace FilRouge
             rd.Close();
             return liste;
         }
-        internal static List<Utilisateur> GetUtilisateurs()
+        public static List<Etablissement> GetEtablissementsByAdmin(long adminId)
         {
-            Cmd.CommandText = "select * from Utilisateur";
+            Cmd.CommandText = $"select e.Id, e.Libelle from Etablissement e inner join Utilisateur u on u.Id={adminId}";
+            SqlDataReader rd = Cmd.ExecuteReader();
+
+            var liste = new List<Etablissement>();
+            while (rd.Read())
+            {
+                liste.Add(new Etablissement { Id = rd.GetInt64("Id"), Libelle = rd.GetString("Libelle"), LesSessions = new List<Session>() });
+            }
+            rd.Close();
+            return liste;
+        }
+        public static Etablissement GetEtablissement(long id)
+        {
+            Cmd.CommandText = $"select * from Etablissement where id={id}";
+            SqlDataReader rd = Cmd.ExecuteReader();
+            Etablissement etab = null;
+            if (rd.Read())
+            {
+                etab = new Etablissement { Id = rd.GetInt64("Id"), Libelle = rd.GetString("Libelle") };
+            }
+            rd.Close();
+            return etab;
+        }
+        public static Admin GetAdmin(long id)
+        {
+            Cmd.CommandText = $"select * from Utilisateur where Role=4 and id={id}";
+            SqlDataReader rd = Cmd.ExecuteReader();
+            Admin admin = null;
+            if (rd.Read())
+            {
+                admin = new Admin { Id = rd.GetInt64("Id"), Nom = rd.GetString("Nom") };
+            }
+            rd.Close();
+            return admin;
+        }
+        public static List<Utilisateur> GetUtilisateurs(RoleEnum role)
+        {
+            if (role== RoleEnum.None)
+                Cmd.CommandText = $"select * from Utilisateur";
+            else 
+                Cmd.CommandText = $"select * from Utilisateur where Role={(int)role}";
             SqlDataReader rd = Cmd.ExecuteReader();
 
             var liste = new List<Utilisateur>();
@@ -75,6 +111,18 @@ namespace FilRouge
             }
             rd.Close();
             return liste;
+        }
+
+        public static void DeleteEtablissement(int id)
+        {
+            Cmd.CommandText = $"delete Etablissement where id={id})";
+            Cmd.ExecuteNonQuery();
+        }
+
+        public static void DeleteUtilisateur(object id)
+        {
+            Cmd.CommandText = $"delete Utilisateur where id={id})";
+            Cmd.ExecuteNonQuery();
         }
     }
 }
