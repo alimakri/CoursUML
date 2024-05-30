@@ -1,5 +1,8 @@
 ﻿using FilRouge;
 
+Data.Init();
+Commun.Init();
+
 string saisie = "";
 while (saisie != "0")
 {
@@ -14,6 +17,7 @@ while (saisie != "0")
     Console.WriteLine("5. Liste des admins");
     Console.WriteLine("6. Supprimer un admin");
     Console.WriteLine("7. Associer un etablissement avec un admin");
+    Console.WriteLine("8. Retirer un etablissement d'un admin");
     Console.ForegroundColor = ConsoleColor.Gray;
 
     saisie = Console.ReadLine() ?? "";
@@ -29,6 +33,7 @@ while (saisie != "0")
         case "6": Scenari.Scenario6(); break;
 
         case "7": Scenari.Scenario7(); break;
+        case "8": Scenari.Scenario8(); break;
 
         default: 
             Console.ForegroundColor= ConsoleColor.Red;

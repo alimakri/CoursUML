@@ -32,6 +32,7 @@ namespace FilRouge
                     Libelle = nomE
                 };
                 Commun.Etablissements.Add(etablissement);
+                Data.AddEtablissement(etablissement);
             }
         }
 
@@ -73,6 +74,7 @@ namespace FilRouge
                 Role = role == "1" ? RoleEnum.SuperAdmin : RoleEnum.Admin
             };
             Commun.Utilisateurs.Add(admin);
+            Data.AddUtilisateur(admin);
         }
 
         // Liste d'admin
@@ -80,11 +82,11 @@ namespace FilRouge
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Green;
-            var admins = Commun.Utilisateurs.Where(x => x.Role == RoleEnum.Admin);
+            var admins = Commun.GetAdmins();  
             foreach (var admin in admins)
             {
                 Console.WriteLine("{0}. {1}", admin.Id, admin.Nom);
-                foreach(var etab in ((Admin)admin).LesEtablissements)
+                foreach(var etab in admin.LesEtablissements)
                 {
                     Console.WriteLine("\t{0}. {1}", etab.Id, etab.Libelle);
                 }
@@ -111,10 +113,25 @@ namespace FilRouge
             Console.WriteLine("Quel admin ?");
             var adminId = Console.ReadLine() ?? "0";
             var etab = Commun.Etablissements.FirstOrDefault(x => x.Id == int.Parse(etabId));
-            var admin = Commun.Utilisateurs.FirstOrDefault(x =>x.Role== RoleEnum.Admin && x.Id == int.Parse(adminId));
-            if(etab != null && admin != null)
+            var admin = Commun.GetAdmin(adminId);
+            if (etab != null && admin != null)
             {
-                ((Admin) admin).LesEtablissements.Add(etab);
+                admin.LesEtablissements.Add(etab);
+                Data.AssocierEtabAdmin(etab, admin);
+            }
+        }
+        internal static void Scenario8()
+        {
+            Console.WriteLine("Quel etablissement ?");
+            var etabId = Console.ReadLine() ?? "0";
+            Console.WriteLine("Quel admin ?");
+            var adminId = Console.ReadLine() ?? "0";
+            var etab = Commun.Etablissements.FirstOrDefault(x => x.Id == int.Parse(etabId));
+            var admin = Commun.Utilisateurs.FirstOrDefault(x => x.Role == RoleEnum.Admin && x.Id == int.Parse(adminId));
+            if (etab != null && admin != null)
+            {
+                ((Admin)admin).LesEtablissements.Remove(etab);
+                Data.DissocierEtabAdmin(etab, admin);
             }
         }
     }

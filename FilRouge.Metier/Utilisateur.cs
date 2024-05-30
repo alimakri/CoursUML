@@ -11,7 +11,7 @@ namespace FilRouge
     public enum RoleEnum { None = 0, Eleve = 1, Formateur = 2, Admin = 4, SuperAdmin = 8 }
     public class Utilisateur
     {
-        public int Id;
+        public long Id;
         public string Nom = "";
         public string Password = "";
         public bool Autorise = false;
