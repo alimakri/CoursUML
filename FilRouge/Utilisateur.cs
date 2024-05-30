@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FilRouge
 {
-    public enum RoleEnum { None, Eleve, Formateur, Admin, SuperAdmin }
+    public enum RoleEnum { None = 0, Eleve = 1, Formateur = 2, Admin = 4, SuperAdmin = 8 }
     public class Utilisateur
     {
         public int Id;
@@ -26,7 +26,7 @@ namespace FilRouge
     }
     public class Admin : Utilisateur
     {
-        public List<Etablissement> LesEtablissements;
+        public List<Etablissement> LesEtablissements = new List<Etablissement>();
     }
     public class SuperAdmin : Admin
     {

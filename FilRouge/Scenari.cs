@@ -64,6 +64,7 @@ namespace FilRouge
         {
             Console.Write("Nom admin: ");
             var nomAdmin = Console.ReadLine();
+            Console.Write("Role admin (1) SuperAdmin (2) Admin: ");
             var role = Console.ReadLine();
             var admin = new Admin
             {
@@ -83,6 +84,10 @@ namespace FilRouge
             foreach (var admin in admins)
             {
                 Console.WriteLine("{0}. {1}", admin.Id, admin.Nom);
+                foreach(var etab in ((Admin)admin).LesEtablissements)
+                {
+                    Console.WriteLine("\t{0}. {1}", etab.Id, etab.Libelle);
+                }
             }
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Gray;
@@ -99,8 +104,18 @@ namespace FilRouge
                 Commun.Utilisateurs.Remove(adminSup);
             }
         }
-        internal static void Scenario6()
+        internal static void Scenario7()
         {
+            Console.WriteLine("Quel etablissement ?");
+            var etabId = Console.ReadLine() ?? "0";
+            Console.WriteLine("Quel admin ?");
+            var adminId = Console.ReadLine() ?? "0";
+            var etab = Commun.Etablissements.FirstOrDefault(x => x.Id == int.Parse(etabId));
+            var admin = Commun.Utilisateurs.FirstOrDefault(x =>x.Role== RoleEnum.Admin && x.Id == int.Parse(adminId));
+            if(etab != null && admin != null)
+            {
+                ((Admin) admin).LesEtablissements.Add(etab);
+            }
         }
     }
 

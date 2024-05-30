@@ -7,12 +7,6 @@ using System.Threading.Tasks;
 namespace FilRouge
 {
     #region Autres
-    public class Cours
-    {
-        public string Libelle;
-        public string Description;
-
-    }
     public class Session
     {
         public string Libelle;

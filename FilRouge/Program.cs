@@ -13,7 +13,7 @@ while (saisie != "0")
     Console.WriteLine("4. Création d'un admin");
     Console.WriteLine("5. Liste des admins");
     Console.WriteLine("6. Supprimer un admin");
-    Console.WriteLine("7. Supprimer un admin");
+    Console.WriteLine("7. Associer un etablissement avec un admin");
     Console.ForegroundColor = ConsoleColor.Gray;
 
     saisie = Console.ReadLine() ?? "";
