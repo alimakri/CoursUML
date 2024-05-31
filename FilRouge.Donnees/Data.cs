@@ -56,7 +56,7 @@ namespace FilRouge
         }
         public static List<Etablissement> GetEtablissementsByAdmin(long adminId)
         {
-            Cmd.CommandText = $"select e.Id, e.Libelle from Etablissement e inner join Utilisateur u on u.Id={adminId}";
+            Cmd.CommandText = $"select e.Id, e.Libelle from Etablissement e inner join Utilisateur u on e.Admin=u.Id where u.Id={adminId}";
             SqlDataReader rd = Cmd.ExecuteReader();
 
             var liste = new List<Etablissement>();

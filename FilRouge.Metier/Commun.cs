@@ -80,6 +80,10 @@ namespace FilRouge
             Data.AssocierEtabAdmin(etab, admin);
         }
 
+        public static void DissocierEtabAdmin(Etablissement etab, Admin admin)
+        {
+            Data.DissocierEtabAdmin(etab, admin);
+        }
 
         public static SuperAdmin SuperAdmin = new SuperAdmin("","", RoleEnum.SuperAdmin);
     }

@@ -140,8 +140,8 @@ namespace FilRouge
             var admin = Commun.GetAdmin(int.Parse(adminId));
             if (etab != null && admin != null)
             {
-                ((Admin)admin).LesEtablissements.Remove(etab);
-                Data.DissocierEtabAdmin(etab, admin);
+                admin.LesEtablissements.Remove(etab);
+                Commun.DissocierEtabAdmin(etab, admin);
             }
         }
         #endregion
