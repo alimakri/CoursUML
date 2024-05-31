@@ -1,0 +1,13 @@
+﻿@model List<FilRouge.Admin>
+<ul>
+    @foreach (var admin in Model)
+    {
+        <li>@admin.Id - @admin.Nom</li>
+        <ul>
+            @foreach (var etab in admin.LesEtablissements)
+            {
+                <li>@etab.Id - @etab.Libelle</li>
+            }
+        </ul>
+    }
+</ul>
