@@ -158,15 +158,29 @@ namespace FilRouge
             Console.WriteLine("Quel élève ?");
             var eleveId = Console.ReadLine() ?? "0";
 
+            Console.WriteLine("Quelle note ?");
+            var note = Console.ReadLine();
+            Console.WriteLine("Quel commentaire ?");
+            var commentaire = Console.ReadLine();
+            Commun.AffecterNote(moduleId, int.Parse(eleveId), note, commentaire);
+        }
+        internal static void Scenario10()
+        {
+            Console.WriteLine("Quelle session ?");
+            var sessionId = Console.ReadLine() ?? "0";
+            Console.WriteLine("Quel module ?");
+            var moduleId = Console.ReadLine() ?? "0";
+
             var module = Commun.GetModule(int.Parse(moduleId));
-            var eleve = Commun.GetEleveByModule(int.Parse(sessionId), int.Parse(moduleId), int.Parse(eleveId));
-            if (module != null && eleve != null)
+            var eleves = Commun.GetElevesByModule(int.Parse(sessionId), int.Parse(moduleId));
+            foreach (var eleve in eleves)
             {
+                Console.WriteLine("Pour {0}", eleve.Nom);
                 Console.WriteLine("Quelle note ?");
                 var note = Console.ReadLine();
                 Console.WriteLine("Quel commentaire ?");
                 var commentaire = Console.ReadLine();
-                Commun.AffecterNote(module, eleve, note, commentaire);
+                Commun.AffecterNote(moduleId, eleve.Id, note, commentaire);
             }
         }
         #endregion

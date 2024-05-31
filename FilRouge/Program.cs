@@ -4,7 +4,12 @@ Data.Init();
 //Commun.Init();
 Scenari.Scenario0();
 
-if (Commun.SuperAdmin.Autorise)
+if (!Commun.SuperAdmin.Autorise)
+{
+    Console.WriteLine("Accès interdit !");
+    Console.ReadLine();
+}
+else
 {
     string saisie = "";
     while (saisie != "0")
@@ -42,6 +47,7 @@ if (Commun.SuperAdmin.Autorise)
             case "7": Scenari.Scenario7(); break;
             case "8": Scenari.Scenario8(); break;
             case "9": Scenari.Scenario9(); break;
+            case "10": Scenari.Scenario10(); break;
 
             default:
                 Console.ForegroundColor = ConsoleColor.Red;

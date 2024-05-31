@@ -17,6 +17,7 @@ namespace FilRouge
     }
     public class Note
     {
+        public long Id;
         public DateTime DateNotation;
         public Module LeModule;
         public Eleve LEleve;

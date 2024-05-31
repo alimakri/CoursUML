@@ -43,7 +43,6 @@ namespace FilRouge
         private void Login(string nom, string password)
         {
             Autorise = nom == "Ali" && password == "P@ssw0rd" && Role == RoleEnum.SuperAdmin;
-            Autorise = true; // Todo : à retirer
         }
     }
 }

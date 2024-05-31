@@ -63,9 +63,9 @@ namespace FilRouge
         {
             return Data.GetModule(id);
         }
-        public static Module GetEleveByModule(int sessionId, int moduleId, int eleveId)
+        public static List<Eleve> GetElevesByModule(int sessionId, int moduleId)
         {
-            return Data.GetEleveByModule(sessionId, moduleId, eleveId);
+            return Data.GetElevesByModule(sessionId, moduleId);
         }
 
         public static void DeleteEtablissement(int id)
@@ -91,6 +91,16 @@ namespace FilRouge
         public static void DissocierEtabAdmin(Etablissement etab, Admin admin)
         {
             Data.DissocierEtabAdmin(etab, admin);
+        }
+
+        public static void AffecterNote(string moduleId, long eleveId, string? noteVal, string? commentaire)
+        {
+            var note = Data.GetNote(moduleId, eleveId);
+
+            if (note == null)
+                Data.AffecterNote(moduleId, eleveId, noteVal, commentaire);
+            else
+                Data.ModifierNote(moduleId, eleveId, noteVal, commentaire);
         }
 
         public static SuperAdmin SuperAdmin = new SuperAdmin("", "", RoleEnum.SuperAdmin);

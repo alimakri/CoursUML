@@ -1,10 +1,10 @@
 USE [master]
 GO
 
-CREATE DATABASE [FilRouge2] ON  PRIMARY 
+CREATE DATABASE [FilRouge] ON  PRIMARY 
 	( 
 	NAME = N'FilRouge', 
-	FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\FilRouge2.mdf' , 
+	FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\FilRouge.mdf' , 
 	SIZE = 8192KB , 
 	MAXSIZE = UNLIMITED, 
 	FILEGROWTH = 65536KB 
@@ -12,12 +12,12 @@ CREATE DATABASE [FilRouge2] ON  PRIMARY
 	LOG ON
 	( 
 	NAME = N'FilRouge_log', 
-	FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\FilRouge2_log.ldf' , 
+	FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.SQLEXPRESS\MSSQL\DATA\FilRouge_log.ldf' , 
 	SIZE = 8192KB , 
 	MAXSIZE = 2048GB , 
 	FILEGROWTH = 65536KB )
 GO
-USE [FilRouge2]
+USE [FilRouge]
 GO
 
 -- [DemiJournee]
@@ -146,9 +146,8 @@ insert Module (Libelle, Formateur, Session) values('UML', 1, 1)
 insert Module (Libelle, Formateur, Session) values('WPF', 1, 1)
 insert SessionEleve (Session, Eleve) values (1, 3),	(1, 4),	(1, 5)
 Go
-use master
 
-select * from SessionEleve se
+select u.Id, u.Nom from SessionEleve se
 inner join Utilisateur u on se.Eleve=u.Id
 where Role=1 and se.Session = 1
 
@@ -159,4 +158,9 @@ where Role=1 and se.Session = 1
 --select * from Utilisateur
 --select * from Module
 
+--select u.Id, u.Nom 
+--from SessionEleve se
+--inner join Utilisateur u on se.Eleve=u.Id
+--where Role=1 and se.Session = 1
 
+use master

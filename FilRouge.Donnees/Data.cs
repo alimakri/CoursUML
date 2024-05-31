@@ -122,7 +122,7 @@ namespace FilRouge
             rd.Close();
             return admin;
         }
-        public static Eleve GetEleveByModule(int sessionId, int moduleId, int eleveId)
+        public static List<Eleve> GetElevesByModule(int sessionId, int moduleId)
         {
             Cmd.CommandText = $@"select u.Id, u.Nom 
                                     from SessionEleve se
@@ -130,13 +130,13 @@ namespace FilRouge
                                     where Role={(int)RoleEnum.Eleve} and se.Session = {sessionId}";
 
             SqlDataReader rd = Cmd.ExecuteReader();
-            Eleve eleve = null;
-            if (rd.Read())
+            List<Eleve> eleves = new List<Eleve>();
+            while (rd.Read())
             {
-                eleve = new Eleve { Id = rd.GetInt64("Id"), Nom = rd.GetString("Nom") };
+                eleves.Add(new Eleve { Id = rd.GetInt64("Id"), Nom = rd.GetString("Nom") });
             }
             rd.Close();
-            return eleve;
+            return eleves;
         }
 
         public static List<Utilisateur> GetUtilisateurs(RoleEnum role)
@@ -172,6 +172,30 @@ namespace FilRouge
             Cmd.CommandText = $"delete Utilisateur where id={id})";
             Cmd.ExecuteNonQuery();
         }
+
+        public static void AffecterNote(string moduleId, long eleveId, string? noteval, string? commentaire)
+        {
+
+            Cmd.CommandText = $"insert Note (DateNotation, Module, Eleve, Valeur, Commentaire) values (getdate(), {moduleId}, {eleveId}, {noteval}, '{commentaire}')";
+            Cmd.ExecuteNonQuery();
+        }
+        public static void ModifierNote(string moduleId, long eleveId, string noteVal, string? commentaire)
+        {
+            Cmd.CommandText = $"update Note set Valeur={noteVal}, Commentaire='{commentaire}' where Eleve={eleveId} and Module={moduleId}";
+            Cmd.ExecuteNonQuery();
+        }
+        public static Note GetNote(string moduleId, long eleveId)
+        {
+            Cmd.CommandText = $"select Id, Valeur from Note where Module={moduleId} and Eleve={eleveId}";
+            SqlDataReader rd = Cmd.ExecuteReader(); Note note = null;
+            if (rd.Read())
+            {
+                note = new Note { Id = rd.GetInt64("Id"), Valeur = rd.GetByte("Valeur") };
+            }
+            rd.Close();
+            return note;
+        }
+
 
     }
 }
