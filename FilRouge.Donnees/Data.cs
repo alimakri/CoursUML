@@ -98,6 +98,18 @@ namespace FilRouge
             rd.Close();
             return etab;
         }
+        public static Module GetModule(long id)
+        {
+            Cmd.CommandText = $"select * from Module where id={id}";
+            SqlDataReader rd = Cmd.ExecuteReader();
+            Module module = null;
+            if (rd.Read())
+            {
+                module = new Module { Id = rd.GetInt64("Id"), Libelle = rd.GetString("Libelle") };
+            }
+            rd.Close();
+            return module;
+        }
         public static Admin GetAdmin(long id)
         {
             Cmd.CommandText = $"select * from Utilisateur where Role=4 and id={id}";
@@ -110,6 +122,23 @@ namespace FilRouge
             rd.Close();
             return admin;
         }
+        public static Eleve GetEleveByModule(int sessionId, int moduleId, int eleveId)
+        {
+            Cmd.CommandText = $@"select u.Id, u.Nom 
+                                    from SessionEleve se
+                                    inner join Utilisateur u on se.Eleve=u.Id
+                                    where Role={(int)RoleEnum.Eleve} and se.Session = {sessionId}";
+
+            SqlDataReader rd = Cmd.ExecuteReader();
+            Eleve eleve = null;
+            if (rd.Read())
+            {
+                eleve = new Eleve { Id = rd.GetInt64("Id"), Nom = rd.GetString("Nom") };
+            }
+            rd.Close();
+            return eleve;
+        }
+
         public static List<Utilisateur> GetUtilisateurs(RoleEnum role)
         {
             if (role == RoleEnum.None)
@@ -143,5 +172,6 @@ namespace FilRouge
             Cmd.CommandText = $"delete Utilisateur where id={id})";
             Cmd.ExecuteNonQuery();
         }
+
     }
 }

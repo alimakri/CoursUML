@@ -25,6 +25,7 @@ namespace FilRouge
     }
     public class Module
     {
+        public long Id;
         public string Libelle;
         public List<DemiJournee> LesJours;
         public Formateur LeFormateur;

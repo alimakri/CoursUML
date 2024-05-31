@@ -151,12 +151,15 @@ namespace FilRouge
         /// </summary>
         internal static void Scenario9()
         {
+            Console.WriteLine("Quelle session ?");
+            var sessionId = Console.ReadLine() ?? "0";
             Console.WriteLine("Quel module ?");
             var moduleId = Console.ReadLine() ?? "0";
             Console.WriteLine("Quel élève ?");
             var eleveId = Console.ReadLine() ?? "0";
+
             var module = Commun.GetModule(int.Parse(moduleId));
-            var eleve = Commun.GetEleveByModule(int.Parse(moduleId), int.Parse(eleveId));
+            var eleve = Commun.GetEleveByModule(int.Parse(sessionId), int.Parse(moduleId), int.Parse(eleveId));
             if (module != null && eleve != null)
             {
                 Console.WriteLine("Quelle note ?");

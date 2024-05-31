@@ -30,14 +30,14 @@ namespace FilRouge
         public static Admin GetAdmin(long id)
         {
             var utilisateurs = Data.GetUtilisateurs(RoleEnum.Admin);
-            var utilisateur = utilisateurs.FirstOrDefault(x=>x.Id==id);
+            var utilisateur = utilisateurs.FirstOrDefault(x => x.Id == id);
             var admin = new Admin
-                {
-                    Id = utilisateur.Id,
-                    Nom = utilisateur.Nom,
-                    Role = utilisateur.Role,
-                    LesEtablissements = Data.GetEtablissements(utilisateur.Id)
-                };            
+            {
+                Id = utilisateur.Id,
+                Nom = utilisateur.Nom,
+                Role = utilisateur.Role,
+                LesEtablissements = Data.GetEtablissements(utilisateur.Id)
+            };
             return admin;
         }
 
@@ -59,6 +59,14 @@ namespace FilRouge
         {
             return Data.GetEtablissement(id);
         }
+        public static Module GetModule(int id)
+        {
+            return Data.GetModule(id);
+        }
+        public static Module GetEleveByModule(int sessionId, int moduleId, int eleveId)
+        {
+            return Data.GetEleveByModule(sessionId, moduleId, eleveId);
+        }
 
         public static void DeleteEtablissement(int id)
         {
@@ -70,7 +78,7 @@ namespace FilRouge
             Data.DeleteUtilisateur(id);
         }
 
-        public static Admin GetAdmin( int id)
+        public static Admin GetAdmin(int id)
         {
             return Data.GetAdmin(id);
         }
@@ -85,6 +93,6 @@ namespace FilRouge
             Data.DissocierEtabAdmin(etab, admin);
         }
 
-        public static SuperAdmin SuperAdmin = new SuperAdmin("","", RoleEnum.SuperAdmin);
+        public static SuperAdmin SuperAdmin = new SuperAdmin("", "", RoleEnum.SuperAdmin);
     }
 }
