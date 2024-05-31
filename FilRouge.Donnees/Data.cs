@@ -6,21 +6,40 @@ namespace FilRouge
 {
     public static class Data
     {
+        private static bool ConnectionOk = false;
         private static SqlCommand Cmd;
         public static void Init()
         {
             var cnx = new SqlConnection();
             cnx.ConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=FilRouge;Integrated Security=true;TrustServerCertificate=True";
-            cnx.Open();
+            try
+            {
+                cnx.Open();
+                ConnectionOk = true;
+            }
+            catch (Exception ex)
+            {
+
+            }
 
             Cmd = new SqlCommand();
             Cmd.Connection = cnx;
             Cmd.CommandType = CommandType.Text;
         }
-        public static void AddEtablissement(Etablissement etablissement)
+        public static bool AddEtablissement(Etablissement etablissement)
         {
+            if (!ConnectionOk) return false;
+
             Cmd.CommandText = $"insert Etablissement (Libelle) values('{etablissement.Libelle}')";
-            Cmd.ExecuteNonQuery();
+            try
+            {
+                Cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
         }
 
         public static void AddUtilisateur(Admin admin)
@@ -93,9 +112,9 @@ namespace FilRouge
         }
         public static List<Utilisateur> GetUtilisateurs(RoleEnum role)
         {
-            if (role== RoleEnum.None)
+            if (role == RoleEnum.None)
                 Cmd.CommandText = $"select * from Utilisateur";
-            else 
+            else
                 Cmd.CommandText = $"select * from Utilisateur where Role={(int)role}";
             SqlDataReader rd = Cmd.ExecuteReader();
 

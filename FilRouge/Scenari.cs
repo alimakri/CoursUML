@@ -55,8 +55,10 @@ namespace FilRouge
         internal static void Scenario3()
         {
             Console.WriteLine("Quel etablissement ?");
-            var saisie = Console.ReadLine() ?? "0";
-            Commun.DeleteEtablissement(int.Parse(saisie));
+            var saisieStr = Console.ReadLine() ?? "0";
+            int saisie = 0;
+            int.TryParse(saisieStr, out saisie);
+            if (saisie != 0) Commun.DeleteEtablissement(saisie);
         }
         #endregion
 
@@ -107,7 +109,7 @@ namespace FilRouge
             Console.WriteLine("Quel admin ?");
             var saisie = Console.ReadLine() ?? "0";
             Commun.DeleteAdmin(int.Parse(saisie));
-            
+
         }
 
         /// <summary>
@@ -142,6 +144,26 @@ namespace FilRouge
             {
                 admin.LesEtablissements.Remove(etab);
                 Commun.DissocierEtabAdmin(etab, admin);
+            }
+        }
+        /// <summary>
+        /// Cas d'utilisation noter un élève pour un module donné
+        /// </summary>
+        internal static void Scenario9()
+        {
+            Console.WriteLine("Quel module ?");
+            var moduleId = Console.ReadLine() ?? "0";
+            Console.WriteLine("Quel élève ?");
+            var eleveId = Console.ReadLine() ?? "0";
+            var module = Commun.GetModule(int.Parse(moduleId));
+            var eleve = Commun.GetEleveByModule(int.Parse(moduleId), int.Parse(eleveId));
+            if (module != null && eleve != null)
+            {
+                Console.WriteLine("Quelle note ?");
+                var note = Console.ReadLine();
+                Console.WriteLine("Quel commentaire ?");
+                var commentaire = Console.ReadLine();
+                Commun.AffecterNote(module, eleve, note, commentaire);
             }
         }
         #endregion
