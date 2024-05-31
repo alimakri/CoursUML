@@ -9,8 +9,9 @@ if (Commun.SuperAdmin.Autorise)
     string saisie = "";
     while (saisie != "0")
     {
-        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.ForegroundColor = ConsoleColor.DarkCyan;
         Console.WriteLine("Choisissez le cas d'utilisation :");
+        Console.ForegroundColor = ConsoleColor.Cyan;
         Console.WriteLine("0. Quitter");
         Console.WriteLine("1. Création d'établissement");
         Console.WriteLine("2. Liste des établissements");
